@@ -2,21 +2,14 @@ from anyapp import AppUser, UserSystem
 from cracker import Cracker
 
 
-my_cracker = Cracker("digits", prefix="tes", known_len=8, tries=10000000)
-guesses = my_cracker.generate_guesses()
+my_cracker = Cracker("uppercase", max_len=4, tries=10000000)
+my_cracker.set_guess_generator()
 
 my_system = UserSystem()
-test_pw = "test24c4"
+test_pw = "teST"
 user = AppUser(id=1, name="makool", password=test_pw)
 my_system.add_user(user)
 user = my_system.get_user("makool")
 print(user.check_password(test_pw))
 
-def guess() -> str:
-    for g in guesses:
-        if user.check_password(g):
-            print("Cracked!")
-            return g
-    return "not cracked :("
-
-print(f"Password is: {guess()}")
+print(f"Password is: {my_cracker.guess(user.check_password)}")
