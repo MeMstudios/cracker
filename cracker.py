@@ -61,7 +61,7 @@ class Cracker:
             num_chars = random.randrange(self.min_len, self.max_len + 1) - len(self.prefix)
         return self.prefix + ("".join(random.choices(self.charset, k=num_chars)))
 
-    def set_guess_generator(self):
+    def init_guess_generator(self):
         self.guess_generator = (self.generate_string() for _ in range(self.tries))
 
     def generate_passwords(self) -> list[str]:
