@@ -2,17 +2,19 @@ import random
 import string
 from typing import Generator
 
-class Cracker():
-    """
-    Include any of the options shown below.  Number of tries is required.  Also, must include max_len or known_len.  
-    Tries will be the number of string generations.  
-    When including max_len it's recommended to include min_len as well.  
-    Including known_len will make the set of guesses a fixed length and ignore the other len parameters.  
-    Using no options produces only lowercase letters.  While other options include lowercase by default,  
-    Using the "digitsonly" option will only have digits, useful for numeric pins.  
 
-    Cracker(["uppercase", "digits", "symbols", "digitsonly"], tries: int, [prefix: str, max_len: num, min_len: num, known_len: num])
+class Cracker:
     """
+    Include any of the options shown below.  Number of tries is required.  Also, must include max_len or known_len.
+    Tries will be the number of string generations.
+    When including max_len it's recommended to include min_len as well.
+    Including known_len will make the set of guesses a fixed length and ignore the other len parameters.
+    Using no options produces only lowercase letters.  While other options include lowercase by default,
+    Using the "digitsonly" option will only have digits, useful for numeric pins.
+
+    Cracker(options=["uppercase", "digits", "symbols", "digitsonly"], params={tries: int, [prefix: str, max_len: num, min_len: num, known_len: num]})
+    """
+
     charset: str
     max_len: int
     min_len: int
@@ -52,7 +54,11 @@ class Cracker():
         self.charset = charset
 
     def generate_string(self) -> str:
-        num_chars = self.max_len - len(self.prefix) if self.fixed else random.randrange(self.min_len, self.max_len + 1) - len(self.prefix)
+        num_chars = (
+            self.max_len - len(self.prefix)
+            if self.fixed
+            else random.randrange(self.min_len, self.max_len + 1) - len(self.prefix)
+        )
         return self.prefix + ("".join(random.choices(self.charset, k=num_chars)))
 
     def generate_guesses(self) -> Generator[str, str, str]:

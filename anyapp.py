@@ -1,16 +1,25 @@
 from pydantic import BaseModel
 import hashlib
 
+HASH_ALGO = "sha256"
+
+
 class AppUser(BaseModel):
     id: int
     name: str
     password: str
 
     def hash_password(self) -> int:
-        self.password = hashlib.new("sha256", bytes(self.password, encoding="utf-8")).hexdigest()
+        self.password = hashlib.new(
+            HASH_ALGO, bytes(self.password, encoding="utf-8")
+        ).hexdigest()
 
     def check_password(self, pw: str) -> bool:
-        return self.password == hashlib.new("sha256", bytes(pw, encoding="utf-8")).hexdigest()
+        return (
+            self.password
+            == hashlib.new(HASH_ALGO, bytes(pw, encoding="utf-8")).hexdigest()
+        )
+
 
 class UserSystem(BaseModel):
     users: list[AppUser] = []

@@ -2,11 +2,11 @@ from anyapp import AppUser, UserSystem
 from cracker import Cracker
 
 
-my_cracker = Cracker("digits", prefix="test", max_len=8, min_len=6, tries=10000000)
+my_cracker = Cracker("digits", prefix="tes", known_len=8, tries=10000000)
 guesses = my_cracker.generate_guesses()
 
 my_system = UserSystem()
-test_pw = "test2434"
+test_pw = "test24c4"
 user = AppUser(id=1, name="makool", password=test_pw)
 my_system.add_user(user)
 user = my_system.get_user("makool")
